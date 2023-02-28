@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_test_peraza/src/features/charger_status/presentation/pages/charger_status_page.dart';
+import 'package:mobile_test_peraza/src/features/charger/presentation/pages/charger_status_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

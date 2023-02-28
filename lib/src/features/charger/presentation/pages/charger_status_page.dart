@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:mobile_test_peraza/src/features/charger_status/presentation/widgets/charger_status_fl_chart_widget.dart';
-import 'package:mobile_test_peraza/src/features/charger_status/presentation/widgets/charger_status_mrx_chart_widget.dart';
+import 'package:mobile_test_peraza/src/features/charger/presentation/widgets/chart/charger_status_fl_chart_widget.dart';
+import 'package:mobile_test_peraza/src/features/charger/presentation/widgets/chart/charger_status_mrx_chart_widget.dart';
 import 'package:mrx_charts/mrx_charts.dart';
 
 class ChargerStatusPage extends StatefulWidget {
