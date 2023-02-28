@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'charger_status_model.g.dart';
+part 'charger_status_entity.g.dart';
 
 @JsonSerializable()
-class ChargerStatusModel {
+class ChargerStatusEntity {
   final int x;
   @JsonKey(name: 'Available')
   final double available;
@@ -16,7 +16,7 @@ class ChargerStatusModel {
   @JsonKey(name: 'Unknown')
   final double unknown;
 
-  ChargerStatusModel({
+  ChargerStatusEntity({
     required this.x,
     required this.available,
     required this.occupied,
@@ -25,8 +25,8 @@ class ChargerStatusModel {
     required this.unknown,
   });
 
-  factory ChargerStatusModel.fromJson(Map<String, dynamic> json) =>
-      _$ChargerStatusModelFromJson(json);
+  factory ChargerStatusEntity.fromJson(Map<String, dynamic> json) =>
+      _$ChargerStatusEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ChargerStatusModelToJson(this);
+  Map<String, dynamic> toJson() => _$ChargerStatusEntityToJson(this);
 }

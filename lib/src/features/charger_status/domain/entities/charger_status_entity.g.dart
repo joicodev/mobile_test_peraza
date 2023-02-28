@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'charger_status_model.dart';
+part of 'charger_status_entity.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ChargerStatusModel _$ChargerStatusModelFromJson(Map<String, dynamic> json) =>
-    ChargerStatusModel(
+ChargerStatusEntity _$ChargerStatusEntityFromJson(Map<String, dynamic> json) =>
+    ChargerStatusEntity(
       x: json['x'] as int,
       available: (json['Available'] as num).toDouble(),
       occupied: (json['Occupied'] as num).toDouble(),
@@ -16,7 +16,8 @@ ChargerStatusModel _$ChargerStatusModelFromJson(Map<String, dynamic> json) =>
       unknown: (json['Unknown'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$ChargerStatusModelToJson(ChargerStatusModel instance) =>
+Map<String, dynamic> _$ChargerStatusEntityToJson(
+        ChargerStatusEntity instance) =>
     <String, dynamic>{
       'x': instance.x,
       'Available': instance.available,
