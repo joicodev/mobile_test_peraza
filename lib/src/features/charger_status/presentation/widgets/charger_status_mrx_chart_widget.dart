@@ -30,7 +30,7 @@ class ChargerStatusMrxChartWidget extends StatelessWidget {
             max: 5,
             textStyle: TextStyle(
               color: Colors.white.withOpacity(0.6),
-              fontSize: 8.0,
+              fontSize: 8.5,
             ),
           ),
           y: ChartAxisSettingsAxis(
