@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_test_peraza/src/features/common/infrastructure/datasources/remote/evsy_dio_client.dart';
 
+// Create a new EvsyDioClient type provider that will be used to provide instances of the EvsyDioClient class
 final evsyClientProvider = Provider<EvsyDioClient>(
   (ref) => EvsyDioClient(
     baseUrl: 'https://services.evsyservices.com',

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:mobile_test_peraza/src/features/charger/presentation/widgets/charger_status_statistics_consumer_widget.dart';
 import 'package:mobile_test_peraza/src/features/charger/presentation/widgets/chart/charger_status_fl_chart_widget.dart';
 import 'package:mobile_test_peraza/src/features/charger/presentation/widgets/chart/charger_status_mrx_chart_widget.dart';
 import 'package:mrx_charts/mrx_charts.dart';
@@ -38,8 +39,9 @@ class _ChargerStatusPageState extends State<ChargerStatusPage> {
       ),
       backgroundColor: const Color(0xFF1B0E41),
       body: Column(
-        children: [
-          Row(
+        children: const [
+          ChargerStatusStatisticsConsumerWidget(),
+          /* Row(
             children: [
               Flexible(
                 child: _buildOptionsChart('Mrx Chart', TypeChart.mrxChart),
@@ -60,7 +62,7 @@ class _ChargerStatusPageState extends State<ChargerStatusPage> {
                     ),
                   ),
                 )
-              : ChargerStatusFlChartWidget()
+              : ChargerStatusFlChartWidget()*/
         ],
       ),
     );
