@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomTextStyle {
-  /// Convert the color to a darken color based on the [percent]
-  static TextStyle contentTextStyle() {
-    return const TextStyle(
+  static TextStyle caption([FontWeight fontWeight = FontWeight.w600]) {
+    return TextStyle(
       color: Colors.black,
-      fontWeight: FontWeight.w600,
-      fontSize: TypographyFontSizes.smallest,
-    );
-  }
-
-  static TextStyle captionTextStyle() {
-    return const TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.w600,
+      fontWeight: fontWeight,
       fontSize: TypographyFontSizes.xSmall,
     );
   }
@@ -21,8 +12,24 @@ class CustomTextStyle {
   static TextStyle paragraphRegular() {
     return const TextStyle(
       color: Colors.black,
+      fontWeight: FontWeight.w400,
+      fontSize: TypographyFontSizes.medium,
+    );
+  }
+
+  static TextStyle paragraphBold() {
+    return const TextStyle(
+      color: Colors.black,
       fontWeight: FontWeight.w600,
       fontSize: TypographyFontSizes.medium,
+    );
+  }
+
+  static TextStyle content([FontWeight fontWeight = FontWeight.w600]) {
+    return TextStyle(
+      color: Colors.black,
+      fontWeight: fontWeight,
+      fontSize: TypographyFontSizes.smallest,
     );
   }
 }

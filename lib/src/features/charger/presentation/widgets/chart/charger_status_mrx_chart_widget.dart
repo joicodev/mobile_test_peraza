@@ -31,13 +31,13 @@ class ChargerStatusMrxChartWidget extends StatelessWidget {
             min: 1,
             max: 5,
             frequency: 1.0,
-            textStyle: CustomTextStyle.captionTextStyle(),
+            textStyle: CustomTextStyle.caption(),
           ),
           y: ChartAxisSettingsAxis(
             min: 0.0,
             max: 100.0,
             frequency: 10.0,
-            textStyle: CustomTextStyle.captionTextStyle(),
+            textStyle: CustomTextStyle.caption(),
           ),
         ),
       ),
@@ -53,20 +53,18 @@ class ChargerStatusMrxChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: Container(
-          constraints: const BoxConstraints(
-            maxHeight: 400.0,
-            maxWidth: 600.0,
-          ),
-          padding: const EdgeInsets.all(24.0),
-          child: Chart(
-            layers: _layers(),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12.0,
-            ).copyWith(bottom: 12.0),
-          ),
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(
+          maxHeight: 400.0,
+          maxWidth: 600.0,
+        ),
+        //padding: const EdgeInsets.all(24.0),
+        child: Chart(
+          layers: _layers(),
+          /*padding: const EdgeInsets.symmetric(
+            horizontal: 12.0,
+          ).copyWith(bottom: 12.0),*/
         ),
       ),
     );

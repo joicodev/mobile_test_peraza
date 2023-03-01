@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_test_peraza/src/features/common/resources/custom_text_style.dart';
 
 class MenuItem {
   final String text;
@@ -14,13 +15,15 @@ class MenuItem {
 }
 
 class AppDropdownButtonHideUnderline extends StatefulWidget {
-  final List<MenuItem> items;
+  final String hint;
   final int? selectedValue;
+  final List<MenuItem> items;
   final void Function(Object?) onChanged;
 
   const AppDropdownButtonHideUnderline({
     Key? key,
     this.selectedValue,
+    required this.hint,
     required this.items,
     required this.onChanged,
   }) : super(key: key);
@@ -42,13 +45,7 @@ class _AppDropdownButtonHideUnderlineState
         [
           DropdownMenuItem<int>(
             value: item.value,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                item.text,
-                style: const TextStyle(fontSize: 14),
-              ),
-            ),
+            child: Text(item.text, style: CustomTextStyle.content()),
           ),
           //If it's last item, we will not add Divider after it.
           if (item != items.last)
@@ -80,15 +77,13 @@ class _AppDropdownButtonHideUnderlineState
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
-        isDense: false,
-        isExpanded: true,
-        hint: Text(
-          'Select Item',
-          style: TextStyle(
-            fontSize: 14,
-            color: Theme.of(context).hintColor,
-          ),
-        ),
+        isDense: true,
+        isExpanded: false,
+        /*underline: Text(
+          'Días de la semana',
+          style: CustomTextStyle.content(),
+        ),*/
+        hint: Text(widget.hint, style: CustomTextStyle.content()),
         value: widget.selectedValue,
         onChanged: widget.onChanged,
         items: _addDividersAfterItems(widget.items),

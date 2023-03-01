@@ -8,6 +8,7 @@ import 'package:mrx_charts/mrx_charts.dart';
 
 class ChargerStatusStatisticsConsumerWidget extends ConsumerWidget {
   final int selectWeekDay;
+
   const ChargerStatusStatisticsConsumerWidget(
     this.selectWeekDay, {
     Key? key,
@@ -16,7 +17,26 @@ class ChargerStatusStatisticsConsumerWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(chargerNotifierProvider);
-    return Column(
+    return state.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, _) => Text(error.toString()),
+      data: (data) => Center(
+        child: InkWell(
+          child: ChargerStatusMrxChartWidget(
+            List.generate(
+              5,
+              (index) => ChartBarDataItem(
+                color: const Color(0xFF8043F9),
+                value: Random().nextInt(100) + 1,
+                x: index.toDouble() + 1,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    /*return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         state.when(
@@ -48,6 +68,6 @@ class ChargerStatusStatisticsConsumerWidget extends ConsumerWidget {
           ),
         ),
       ],
-    );
+    );*/
   }
 }
