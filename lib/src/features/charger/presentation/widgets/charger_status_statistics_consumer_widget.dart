@@ -8,16 +8,14 @@ import 'package:mobile_test_peraza/src/features/common/presentation/widgets/comm
 import 'package:mrx_charts/mrx_charts.dart';
 
 class ChargerStatusStatisticsConsumerWidget extends ConsumerWidget {
-  final int selectWeekDay;
-
+  final int hours;
   const ChargerStatusStatisticsConsumerWidget(
-    this.selectWeekDay, {
+    this.hours, {
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print('Changed!!!');
     final state = ref.watch(chargerNotifierProvider);
     return state.when(
       loading: () => Center(
@@ -28,20 +26,43 @@ class ChargerStatusStatisticsConsumerWidget extends ConsumerWidget {
         ),
       ),
       error: (error, _) => Text(error.toString()),
-      data: (data) => Center(
-        child: InkWell(
-          child: ChargerStatusMrxChartWidget(
-            List.generate(
-              5,
-              (index) => ChartBarDataItem(
-                color: const Color(0xFF8043F9),
-                value: Random().nextInt(100) + 1,
-                x: index.toDouble() + 1,
-              ),
+      data: (data) {
+        print('hours $hours');
+        print('OYEEE ${data[hours].toJson()}');
+        return Center(
+          child: InkWell(
+            child: ChargerStatusMrxChartWidget(
+              [
+                ChartBarDataItem(
+                  color: const Color(0xFF8043F9),
+                  value: data[hours].available,
+                  x: 1,
+                ),
+                ChartBarDataItem(
+                  color: const Color(0xFF8043F9),
+                  value: data[hours].occupied,
+                  x: 2,
+                ),
+                ChartBarDataItem(
+                  color: const Color(0xFF8043F9),
+                  value: data[hours].outOfService,
+                  x: 3,
+                ),
+                ChartBarDataItem(
+                  color: const Color(0xFF8043F9),
+                  value: data[hours].reserved,
+                  x: 4,
+                ),
+                ChartBarDataItem(
+                  color: const Color(0xFF8043F9),
+                  value: data[hours].unknown,
+                  x: 5,
+                ),
+              ],
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
     /*return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

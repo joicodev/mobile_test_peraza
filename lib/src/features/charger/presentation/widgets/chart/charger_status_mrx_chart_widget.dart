@@ -36,7 +36,7 @@ class ChargerStatusMrxChartWidget extends StatelessWidget {
           y: ChartAxisSettingsAxis(
             min: 0.0,
             max: 100.0,
-            frequency: 10.0,
+            frequency: 5.0,
             textStyle: CustomTextStyle.caption(),
           ),
         ),

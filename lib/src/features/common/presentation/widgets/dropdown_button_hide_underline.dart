@@ -11,6 +11,7 @@ class MenuItem {
 
 class AppDropdownButtonHideUnderline extends StatefulWidget {
   final String hint;
+  final bool enabled;
   final int? selectedValue;
   final List<MenuItem> items;
   final void Function(Object?) onChanged;
@@ -18,6 +19,7 @@ class AppDropdownButtonHideUnderline extends StatefulWidget {
   const AppDropdownButtonHideUnderline({
     Key? key,
     this.selectedValue,
+    this.enabled = true,
     required this.hint,
     required this.items,
     required this.onChanged,
@@ -40,6 +42,7 @@ class _AppDropdownButtonHideUnderlineState
         [
           DropdownMenuItem<int>(
             value: item.value,
+            enabled: widget.enabled,
             child: Text(item.text, style: CustomTextStyle.content()),
           ),
           //If it's last item, we will not add Divider after it.
@@ -77,8 +80,8 @@ class _AppDropdownButtonHideUnderlineState
         onChanged: widget.onChanged,
         items: _addDividersAfterItems(widget.items),
         hint: Text(widget.hint, style: CustomTextStyle.content()),
-        buttonStyleData: const ButtonStyleData(height: 40, width: 140),
         dropdownStyleData: const DropdownStyleData(maxHeight: 200),
+        buttonStyleData: const ButtonStyleData(height: 40, width: 140),
         menuItemStyleData: MenuItemStyleData(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           customHeights: _getCustomItemsHeights(),

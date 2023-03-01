@@ -20,7 +20,7 @@ enum TypeChart { mrxChart, flChart }
 class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
   TypeChart? _character = TypeChart.mrxChart;
   int? _selectWeekDay;
-  int? _selectHours;
+  int _selectHours = 0;
 
   final _itemsSelectWeekDay = [
     const MenuItem(text: 'Lunes', value: 1),
@@ -36,7 +36,7 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
     24,
     (index) => MenuItem(
       text: 'Hora ${index + 1}',
-      value: index + 1,
+      value: index,
     ),
   );
 
@@ -55,85 +55,82 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("[ChargerStatisticsPage] - build");
     return Scaffold(
       appBar: AppBar(title: const Text("Evsy's charger statistics")),
-      //backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.filter_alt_outlined,
-                  size: 32,
-                  color: AppColors.primary,
-                ),
-                Text('Filter by', style: CustomTextStyle.paragraphBold()),
-              ],
-            ),
-            Consumer(
-              builder: (context, ref, _) {
-                print(
-                    'LOADING???? ${ref.watch(chargerNotifierProvider).isLoading}');
-                return Row(
-                  children: [
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.filter_alt_outlined,
+                size: 32,
+                color: AppColors.primary,
+              ),
+              Text('Filter by', style: CustomTextStyle.paragraphBold()),
+            ],
+          ),
+          Consumer(
+            builder: (context, ref, _) {
+              return Row(
+                children: [
+                  AppDropdownButtonHideUnderline(
+                    hint: 'Seleccionar día',
+                    selectedValue: _selectWeekDay,
+                    items: _itemsSelectWeekDay,
+                    enabled: !ref.watch(chargerNotifierProvider).isLoading,
+                    onChanged: (Object? value) {
+                      setState(() => _selectWeekDay = value as int?);
+                      final prov = ref.read(chargerNotifierProvider.notifier);
+                      prov.getStatistics(_selectWeekDay!);
+                    },
+                  ),
+                  if (_selectWeekDay != null)
                     AppDropdownButtonHideUnderline(
-                      hint: 'Seleccionar día',
-                      selectedValue: _selectWeekDay,
-                      items: _itemsSelectWeekDay,
+                      hint: 'Seleccionar hora',
+                      selectedValue: _selectHours,
+                      items: _itemsSelectHours,
+                      enabled: !ref.watch(chargerNotifierProvider).isLoading,
                       onChanged: (Object? value) {
-                        setState(() => _selectWeekDay = value as int?);
+                        setState(() => _selectHours = (value as int?) ?? 1);
                       },
                     ),
-                    if (_selectWeekDay != null)
-                      AppDropdownButtonHideUnderline(
-                        hint: 'Seleccionar hora',
-                        selectedValue: _selectHours,
-                        items: _itemsSelectHours,
-                        onChanged: (Object? value) {
-                          setState(() => _selectHours = value as int?);
-                        },
-                      ),
-                  ],
-                ).paddingSymmetric(vertical: 10);
-              },
-            ),
-            if (_selectWeekDay == null)
-              CommonWidgets.buildLottieAsset(
-                context,
-                'assets/lottie/car_charger.json',
-              )
-            else
-              ChargerStatusStatisticsConsumerWidget(_selectWeekDay ?? 0),
-            /* Row(
-              children: [
-                Flexible(
-                  child: _buildOptionsChart('Mrx Chart', TypeChart.mrxChart),
-                ),
-                Flexible(
-                  child: _buildOptionsChart('Fl Chart', TypeChart.flChart),
-                ),
-              ],
-            ),
-            _character == TypeChart.mrxChart
-                ? ChargerStatusMrxChartWidget(
-                    List.generate(
-                      5,
-                      (index) => ChartBarDataItem(
-                        color: const Color(0xFF8043F9),
-                        value: Random().nextInt(100) + 1,
-                        x: index.toDouble() + 1,
-                      ),
+                ],
+              );
+            },
+          ).paddingSymmetric(vertical: 10),
+          if (_selectWeekDay == null)
+            CommonWidgets.buildLottieAsset(
+              context,
+              'assets/lottie/car_charger.json',
+            )
+          else
+            ChargerStatusStatisticsConsumerWidget(_selectHours),
+          /* Row(
+            children: [
+              Flexible(
+                child: _buildOptionsChart('Mrx Chart', TypeChart.mrxChart),
+              ),
+              Flexible(
+                child: _buildOptionsChart('Fl Chart', TypeChart.flChart),
+              ),
+            ],
+          ),
+          _character == TypeChart.mrxChart
+              ? ChargerStatusMrxChartWidget(
+                  List.generate(
+                    5,
+                    (index) => ChartBarDataItem(
+                      color: const Color(0xFF8043F9),
+                      value: Random().nextInt(100) + 1,
+                      x: index.toDouble() + 1,
                     ),
-                  )
-                : ChargerStatusFlChartWidget()*/
-          ],
-        ),
-      ),
+                  ),
+                )
+              : ChargerStatusFlChartWidget()*/
+        ],
+      ).paddingSymmetric(horizontal: 20.0, vertical: 20),
     );
   }
 }
