@@ -50,6 +50,9 @@ class ChargerStatusStatisticsConsumerWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(chargerNotifierProvider);
     return state.when(
+      error: (error, _) => Center(
+        child: Text(error.toString()),
+      ),
       loading: () => Center(
         child: CommonWidgets.buildLottieAsset(
           context,
@@ -57,7 +60,6 @@ class ChargerStatusStatisticsConsumerWidget extends ConsumerWidget {
           'Cargando...',
         ),
       ),
-      error: (error, _) => Text(error.toString()),
       data: (data) {
         return Center(
           child: InkWell(

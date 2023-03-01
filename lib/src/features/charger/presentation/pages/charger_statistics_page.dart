@@ -32,8 +32,8 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
   final _itemsSelectHours = List.generate(
     24,
     (index) => MenuItem(
-      text: 'Hora ${index + 1}',
       value: index,
+      text: 'Hora ${index + 1}',
     ),
   );
 
@@ -57,13 +57,15 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
           ),
           Consumer(
             builder: (context, ref, _) {
+              final state = ref.watch(chargerNotifierProvider);
+              print('state.hasError ${state.hasError}');
               return Row(
                 children: [
                   AppDropdownButtonHideUnderline(
                     hint: 'Seleccionar día',
                     selectedValue: _selectWeekDay,
                     items: _itemsSelectWeekDay,
-                    enabled: !ref.watch(chargerNotifierProvider).isLoading,
+                    enabled: !state.isLoading,
                     onChanged: (Object? value) {
                       setState(() {
                         _selectHours = 0;
@@ -73,12 +75,14 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
                       prov.getStatistics(_selectWeekDay!);
                     },
                   ),
-                  if (_selectWeekDay != null)
+                  if (_selectWeekDay != null &&
+                      !state.hasError &&
+                      !state.isLoading)
                     AppDropdownButtonHideUnderline(
                       hint: 'Seleccionar hora',
                       selectedValue: _selectHours,
                       items: _itemsSelectHours,
-                      enabled: !ref.watch(chargerNotifierProvider).isLoading,
+                      enabled: !state.isLoading,
                       onChanged: (Object? value) {
                         setState(() => _selectHours = (value as int?) ?? 1);
                       },
