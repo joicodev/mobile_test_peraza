@@ -5,7 +5,6 @@ import 'package:mobile_test_peraza/src/features/charger/presentation/widgets/cha
 import 'package:mobile_test_peraza/src/features/common/extensions/widget_extension.dart';
 import 'package:mobile_test_peraza/src/features/common/presentation/widgets/common_widgets.dart';
 import 'package:mobile_test_peraza/src/features/common/presentation/widgets/dropdown_button_hide_underline.dart';
-import 'package:mobile_test_peraza/src/features/common/resources/app_colors.dart';
 import 'package:mobile_test_peraza/src/features/common/resources/custom_text_style.dart';
 
 class ChargerStatisticsPage extends StatefulWidget {
@@ -47,10 +46,10 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.filter_alt_outlined,
-                size: 32,
-                color: AppColors.primary,
+                size: 30,
+                color: Theme.of(context).primaryColor,
               ),
               Text('Filter by', style: CustomTextStyle.paragraphBold()),
             ],
