@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_test_peraza/src/features/charger/domain/entities/charger_status_entity.dart';
 import 'package:mobile_test_peraza/src/features/charger/presentation/providers/charger_status_provider.dart';
 import 'package:mobile_test_peraza/src/features/charger/presentation/widgets/chart/charger_status_mrx_chart_widget.dart';
 import 'package:mobile_test_peraza/src/features/common/presentation/widgets/common_widgets.dart';
@@ -13,6 +14,37 @@ class ChargerStatusStatisticsConsumerWidget extends ConsumerWidget {
     this.hours, {
     Key? key,
   }) : super(key: key);
+
+  ChartBarDataItem _buildChartData({
+    required double i,
+    required BuildContext context,
+    required ChargerStatusEntity data,
+  }) {
+    double val = 0.0;
+    switch (i.toInt()) {
+      case 1:
+        val = data.available;
+        break;
+      case 2:
+        val = data.occupied;
+        break;
+      case 3:
+        val = data.outOfService;
+        break;
+      case 4:
+        val = data.reserved;
+        break;
+      case 5:
+        val = data.unknown;
+        break;
+    }
+
+    return ChartBarDataItem(
+      x: i,
+      value: val,
+      color: Theme.of(context).primaryColor,
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,76 +59,21 @@ class ChargerStatusStatisticsConsumerWidget extends ConsumerWidget {
       ),
       error: (error, _) => Text(error.toString()),
       data: (data) {
-        print('hours $hours');
-        print('OYEEE ${data[hours].toJson()}');
         return Center(
           child: InkWell(
             child: ChargerStatusMrxChartWidget(
-              [
-                ChartBarDataItem(
-                  color: const Color(0xFF8043F9),
-                  value: data[hours].available,
-                  x: 1,
+              List.generate(
+                5,
+                (index) => _buildChartData(
+                  i: index + 1,
+                  context: context,
+                  data: data[hours],
                 ),
-                ChartBarDataItem(
-                  color: const Color(0xFF8043F9),
-                  value: data[hours].occupied,
-                  x: 2,
-                ),
-                ChartBarDataItem(
-                  color: const Color(0xFF8043F9),
-                  value: data[hours].outOfService,
-                  x: 3,
-                ),
-                ChartBarDataItem(
-                  color: const Color(0xFF8043F9),
-                  value: data[hours].reserved,
-                  x: 4,
-                ),
-                ChartBarDataItem(
-                  color: const Color(0xFF8043F9),
-                  value: data[hours].unknown,
-                  x: 5,
-                ),
-              ],
+              ),
             ),
           ),
         );
       },
     );
-    /*return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        state.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => Text(error.toString()),
-          data: (data) => Center(
-            child: InkWell(
-              child: ChargerStatusMrxChartWidget(
-                List.generate(
-                  5,
-                  (index) => ChartBarDataItem(
-                    color: const Color(0xFF8043F9),
-                    value: Random().nextInt(100) + 1,
-                    x: index.toDouble() + 1,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        Center(
-          child: ElevatedButton(
-            onPressed: !state.isLoading
-                ? () => ref
-                    .read(chargerNotifierProvider.notifier)
-                    .getStatistics(selectWeekDay)
-                : null,
-            child: const Text('Press me to get a give'),
-          ),
-        ),
-      ],
-    );*/
   }
 }

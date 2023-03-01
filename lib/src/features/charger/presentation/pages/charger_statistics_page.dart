@@ -15,10 +15,7 @@ class ChargerStatisticsPage extends StatefulWidget {
   State<ChargerStatisticsPage> createState() => _ChargerStatisticsPageState();
 }
 
-enum TypeChart { mrxChart, flChart }
-
 class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
-  TypeChart? _character = TypeChart.mrxChart;
   int? _selectWeekDay;
   int _selectHours = 0;
 
@@ -39,19 +36,6 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
       value: index,
     ),
   );
-
-  Widget _buildOptionsChart(String title, TypeChart value) {
-    return ListTile(
-      title: Text(title, style: const TextStyle(color: Colors.white)),
-      leading: Radio<TypeChart>(
-        value: value,
-        groupValue: _character,
-        onChanged: (TypeChart? value) {
-          setState(() => _character = value);
-        },
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +65,10 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
                     items: _itemsSelectWeekDay,
                     enabled: !ref.watch(chargerNotifierProvider).isLoading,
                     onChanged: (Object? value) {
-                      setState(() => _selectWeekDay = value as int?);
+                      setState(() {
+                        _selectHours = 0;
+                        _selectWeekDay = value as int?;
+                      });
                       final prov = ref.read(chargerNotifierProvider.notifier);
                       prov.getStatistics(_selectWeekDay!);
                     },
@@ -107,28 +94,6 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
             )
           else
             ChargerStatusStatisticsConsumerWidget(_selectHours),
-          /* Row(
-            children: [
-              Flexible(
-                child: _buildOptionsChart('Mrx Chart', TypeChart.mrxChart),
-              ),
-              Flexible(
-                child: _buildOptionsChart('Fl Chart', TypeChart.flChart),
-              ),
-            ],
-          ),
-          _character == TypeChart.mrxChart
-              ? ChargerStatusMrxChartWidget(
-                  List.generate(
-                    5,
-                    (index) => ChartBarDataItem(
-                      color: const Color(0xFF8043F9),
-                      value: Random().nextInt(100) + 1,
-                      x: index.toDouble() + 1,
-                    ),
-                  ),
-                )
-              : ChargerStatusFlChartWidget()*/
         ],
       ).paddingSymmetric(horizontal: 20.0, vertical: 20),
     );
