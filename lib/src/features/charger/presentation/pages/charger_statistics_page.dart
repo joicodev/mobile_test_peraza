@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_test_peraza/src/features/charger/presentation/providers/charger_status_provider.dart';
 import 'package:mobile_test_peraza/src/features/charger/presentation/widgets/charger_status_statistics_consumer_widget.dart';
 import 'package:mobile_test_peraza/src/features/common/extensions/widget_extension.dart';
 import 'package:mobile_test_peraza/src/features/common/presentation/widgets/common_widgets.dart';
@@ -53,6 +55,7 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
 
   @override
   Widget build(BuildContext context) {
+    print("[ChargerStatisticsPage] - build");
     return Scaffold(
       appBar: AppBar(title: const Text("Evsy's charger statistics")),
       //backgroundColor: Colors.white,
@@ -72,28 +75,33 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
                 Text('Filter by', style: CustomTextStyle.paragraphBold()),
               ],
             ),
-            Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AppDropdownButtonHideUnderline(
-                  hint: 'Seleccionar día',
-                  selectedValue: _selectWeekDay,
-                  items: _itemsSelectWeekDay,
-                  onChanged: (Object? value) {
-                    setState(() => _selectWeekDay = value as int?);
-                  },
-                ),
-                if (_selectWeekDay != null)
-                  AppDropdownButtonHideUnderline(
-                    hint: 'Seleccionar hora',
-                    selectedValue: _selectHours,
-                    items: _itemsSelectHours,
-                    onChanged: (Object? value) {
-                      setState(() => _selectHours = value as int?);
-                    },
-                  ),
-              ],
-            ).paddingSymmetric(vertical: 10),
+            Consumer(
+              builder: (context, ref, _) {
+                print(
+                    'LOADING???? ${ref.watch(chargerNotifierProvider).isLoading}');
+                return Row(
+                  children: [
+                    AppDropdownButtonHideUnderline(
+                      hint: 'Seleccionar día',
+                      selectedValue: _selectWeekDay,
+                      items: _itemsSelectWeekDay,
+                      onChanged: (Object? value) {
+                        setState(() => _selectWeekDay = value as int?);
+                      },
+                    ),
+                    if (_selectWeekDay != null)
+                      AppDropdownButtonHideUnderline(
+                        hint: 'Seleccionar hora',
+                        selectedValue: _selectHours,
+                        items: _itemsSelectHours,
+                        onChanged: (Object? value) {
+                          setState(() => _selectHours = value as int?);
+                        },
+                      ),
+                  ],
+                ).paddingSymmetric(vertical: 10);
+              },
+            ),
             if (_selectWeekDay == null)
               CommonWidgets.buildLottieAsset(
                 context,
