@@ -73,7 +73,7 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppDropdownButtonHideUnderline(
                   hint: 'Seleccionar día',

@@ -5,13 +5,8 @@ import 'package:mobile_test_peraza/src/features/common/resources/custom_text_sty
 class MenuItem {
   final String text;
   final int value;
-  final IconData? icon;
 
-  const MenuItem({
-    this.icon,
-    required this.text,
-    required this.value,
-  });
+  const MenuItem({required this.text, required this.value});
 }
 
 class AppDropdownButtonHideUnderline extends StatefulWidget {
@@ -78,19 +73,12 @@ class _AppDropdownButtonHideUnderlineState
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
         isDense: true,
-        isExpanded: false,
-        /*underline: Text(
-          'Días de la semana',
-          style: CustomTextStyle.content(),
-        ),*/
-        hint: Text(widget.hint, style: CustomTextStyle.content()),
         value: widget.selectedValue,
         onChanged: widget.onChanged,
         items: _addDividersAfterItems(widget.items),
+        hint: Text(widget.hint, style: CustomTextStyle.content()),
         buttonStyleData: const ButtonStyleData(height: 40, width: 140),
-        dropdownStyleData: const DropdownStyleData(
-          maxHeight: 200,
-        ),
+        dropdownStyleData: const DropdownStyleData(maxHeight: 200),
         menuItemStyleData: MenuItemStyleData(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           customHeights: _getCustomItemsHeights(),
