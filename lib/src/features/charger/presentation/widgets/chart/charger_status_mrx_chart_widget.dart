@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test_peraza/src/features/common/resources/custom_text_style.dart';
 import 'package:mrx_charts/mrx_charts.dart';
 
 class ChargerStatusMrxChartWidget extends StatelessWidget {
@@ -8,43 +9,37 @@ class ChargerStatusMrxChartWidget extends StatelessWidget {
   String _getStatusName(int status) {
     switch (status) {
       case 1:
-        return "Disponible";
+        return "Available";
       case 2:
-        return "Ocupado";
+        return "Busy";
       case 3:
-        return "Fuera de servicio";
+        return 'Out of\nservice';
       case 4:
-        return "Reservado";
+        return "Reserved";
       default:
-        return "Desconocido";
+        return "Unknown";
     }
   }
 
   List<ChartLayer> _layers() {
     return [
       ChartAxisLayer(
+        labelY: (value) => value.toInt().toString(),
+        labelX: (value) => _getStatusName(value.toInt()),
         settings: ChartAxisSettings(
           x: ChartAxisSettingsAxis(
-            frequency: 1.0,
             min: 1,
             max: 5,
-            textStyle: TextStyle(
-              color: Colors.white.withOpacity(0.6),
-              fontSize: 8.5,
-            ),
+            frequency: 1.0,
+            textStyle: CustomTextStyle.captionTextStyle(),
           ),
           y: ChartAxisSettingsAxis(
-            frequency: 10.0,
-            max: 100.0,
             min: 0.0,
-            textStyle: TextStyle(
-              color: Colors.white.withOpacity(0.6),
-              fontSize: 5.0,
-            ),
+            max: 100.0,
+            frequency: 10.0,
+            textStyle: CustomTextStyle.captionTextStyle(),
           ),
         ),
-        labelX: (value) => _getStatusName(value.toInt()),
-        labelY: (value) => value.toInt().toString(),
       ),
       ChartBarLayer(
         items: items,

@@ -13,20 +13,18 @@ class ChargerStatusNotifier
   // IChargerStatusRepository
   final IChargerStatusRepository _repository;
 
-  Future<void> getStatistics() async {
+  Future<void> getStatistics(int dayOfWeek) async {
     try {
-      final oldItems = state.value ?? [];
+      //final oldItems = state.value ?? [];
       state = const AsyncValue.loading();
       final params = ChargerStatusStatisticsRequest(
         outletId: 56644,
         filter: "day_of_week",
-        dayOfWeek: 4,
+        dayOfWeek: dayOfWeek,
       );
 
       final result = await _repository.getChargerStatistics(params);
-      state = AsyncValue.data(
-        oldItems.where((element) => !result.contains(element)).toList(),
-      );
+      state = AsyncValue.data(result);
     } catch (_) {
       state = AsyncValue.error('Ha ocurrido un error!', StackTrace.current);
     }
