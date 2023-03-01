@@ -51,7 +51,11 @@ class ChargerStatusStatisticsConsumerWidget extends ConsumerWidget {
     final state = ref.watch(chargerNotifierProvider);
     return state.when(
       error: (error, _) => Center(
-        child: Text(error.toString()),
+        child: CommonWidgets.buildLottieAsset(
+          context,
+          'assets/lottie/error.json',
+          '¡Oops, hemos tenido un error inesperado!\n$error',
+        ),
       ),
       loading: () => Center(
         child: CommonWidgets.buildLottieAsset(

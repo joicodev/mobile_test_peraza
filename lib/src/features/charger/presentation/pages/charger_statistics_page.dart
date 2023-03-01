@@ -58,7 +58,6 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
           Consumer(
             builder: (context, ref, _) {
               final state = ref.watch(chargerNotifierProvider);
-              print('state.hasError ${state.hasError}');
               return Row(
                 children: [
                   AppDropdownButtonHideUnderline(
