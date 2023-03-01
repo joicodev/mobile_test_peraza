@@ -54,7 +54,7 @@ class ChargerStatusStatisticsConsumerWidget extends ConsumerWidget {
         child: CommonWidgets.buildLottieAsset(
           context,
           'assets/lottie/error.json',
-          '¡Oops, hemos tenido un error inesperado!\n$error',
+          '¡Oops, hemos tenido un error inesperado!',
         ),
       ),
       loading: () => Center(
