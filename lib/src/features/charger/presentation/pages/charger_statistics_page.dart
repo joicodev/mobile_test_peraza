@@ -15,9 +15,10 @@ class ChargerStatisticsPage extends StatefulWidget {
 }
 
 class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
-  int? _selectWeekDay;
-  int _selectHours = 0;
+  int? _selectWeekDay; // Saves the selected day in the filter.
+  int _selectHours = 0; // Saves the selected time in the filter.
 
+  // Contains the dropdown list items to select the day of the week.
   final _itemsSelectWeekDay = [
     const MenuItem(text: 'Lunes', value: 1),
     const MenuItem(text: 'Martes', value: 2),
@@ -28,6 +29,7 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
     const MenuItem(text: 'Domingo', value: 7),
   ];
 
+  // Contains the dropdown list items for selecting the time of day.
   final _itemsSelectHours = List.generate(
     24,
     (index) => MenuItem(
@@ -36,6 +38,7 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
     ),
   );
 
+  // This widget is the filter section, which includes two dropdown lists to select the day and time.
   Widget _boxFilter() {
     return Column(
       children: [
@@ -66,6 +69,7 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
         ),
         Consumer(
           builder: (context, ref, _) {
+            // Gets the status of the provider.
             final state = ref.watch(chargerNotifierProvider);
             return Row(
               children: [
@@ -83,6 +87,7 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
                     prov.getStatistics(_selectWeekDay!);
                   },
                 ),
+                // Displays the dropdown list if a day has been selected.
                 if (_selectWeekDay != null &&
                     !state.hasError &&
                     !state.isLoading)
@@ -111,13 +116,16 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          // Adds the _boxFilter() widget that returns a custom filter box.
           _boxFilter(),
+          // If the _selectWeekDay variable is null, an animation is displayed using the buildLottieAsset() widget.
           if (_selectWeekDay == null)
             CommonWidgets.buildLottieAsset(
               context,
               'assets/lottie/car_charger.json',
             )
           else
+            // If _selectWeekDay has a value, returns a Charger Status Statistics ConsumerWidget widget with the value of _selectHours as a parameter.
             Expanded(
               child: ChargerStatusStatisticsConsumerWidget(_selectHours),
             ),
