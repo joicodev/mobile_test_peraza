@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_test_peraza/src/features/charger/presentation/providers/charger_status_provider.dart';
-import 'package:mobile_test_peraza/src/features/charger/presentation/widgets/chart/charger_status_mrx_chart_widget.dart';
+import 'package:mobile_test_peraza/src/features/charger/presentation/widgets/charger_status_mrx_chart_widget.dart';
 import 'package:mobile_test_peraza/src/features/common/presentation/widgets/common_widgets.dart';
 
 class ChargerStatusStatisticsConsumerWidget extends ConsumerWidget {

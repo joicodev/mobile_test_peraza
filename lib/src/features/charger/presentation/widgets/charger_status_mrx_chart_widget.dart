@@ -47,15 +47,15 @@ class ChargerStatusMrxChartWidget extends StatelessWidget {
   String _getStatusName(int status) {
     switch (status) {
       case 1:
-        return "Available";
+        return "Disponible";
       case 2:
-        return "Busy";
+        return "Ocupado";
       case 3:
-        return 'Out of\nservice';
+        return 'Fuera de\nservicio';
       case 4:
-        return "Reserved";
+        return "Reservado";
       default:
-        return "Unknown";
+        return "Desconocido";
     }
   }
 
@@ -122,6 +122,7 @@ class ChargerStatusMrxChartWidget extends StatelessWidget {
               final value = _valueStatusByIndex(index + 1, data[hourSelected]);
               return ListTile(
                 dense: true,
+                minLeadingWidth: 0,
                 title: Text(
                   name,
                   style: CustomTextStyle.content(FontWeight.w400),

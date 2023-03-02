@@ -46,7 +46,7 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
               size: 30,
               color: Theme.of(context).primaryColor,
             ),
-            Text('Filter by', style: CustomTextStyle.paragraphBold()),
+            Text('Filtrar por', style: CustomTextStyle.paragraphBold()),
           ],
         ),
         Consumer(
@@ -107,7 +107,7 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
               child: ChargerStatusStatisticsConsumerWidget(_selectHours),
             ),
         ],
-      ).paddingSymmetric(horizontal: 20.0, vertical: 20),
+      ).paddingAll(20),
     );
   }
 }
