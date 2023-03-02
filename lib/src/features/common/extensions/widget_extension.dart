@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-extension WidgetExtension on Widget? {
+// Adds some methods to help instantiate Padding in a more convenient way.
+extension PaddingExtension on Widget? {
   /// return padding top
   Padding paddingTop(double top) {
     return Padding(padding: EdgeInsets.only(top: top), child: this);
@@ -24,11 +25,6 @@ extension WidgetExtension on Widget? {
   /// return padding all
   Padding paddingAll(double padding) {
     return Padding(padding: EdgeInsets.all(padding), child: this);
-  }
-
-  Padding paddingAllLTRB(double left, double top, double right, double bottom) {
-    return Padding(
-        padding: EdgeInsets.fromLTRB(left, top, right, bottom), child: this);
   }
 
   /// return custom padding from each side
