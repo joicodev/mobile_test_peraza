@@ -49,7 +49,7 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
               size: 30,
               color: Theme.of(context).primaryColor,
             ),
-            Text('Filtrar por', style: CustomTextStyle.paragraphBold()),
+            Text('Filtrar por', style: CustomTextStyle.medium()),
             if (_selectWeekDay != null)
               Expanded(
                 child: Align(
@@ -113,7 +113,7 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
     return Scaffold(
       appBar: AppBar(title: const Text("Evsy's charger statistics")),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // Adds the _boxFilter() widget that returns a custom filter box.
@@ -123,6 +123,8 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
             CommonWidgets.buildLottieAsset(
               context,
               'assets/lottie/car_charger.json',
+              "Evsy's Mobile Challenge",
+              CustomTextStyle.large(),
             )
           else
             // If _selectWeekDay has a value, returns a Charger Status Statistics ConsumerWidget widget with the value of _selectHours as a parameter.

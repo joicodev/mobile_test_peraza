@@ -13,23 +13,15 @@ class CustomTextStyle {
     return TextStyle(
       color: Colors.black,
       fontWeight: fontWeight,
-      fontSize: TypographyFontSizes.xSmall,
-    );
-  }
-
-  static TextStyle paragraphRegular() {
-    return const TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.w400,
       fontSize: TypographyFontSizes.medium,
     );
   }
 
-  static TextStyle paragraphBold() {
-    return const TextStyle(
+  static TextStyle large([FontWeight fontWeight = FontWeight.w600]) {
+    return TextStyle(
       color: Colors.black,
-      fontWeight: FontWeight.w600,
-      fontSize: TypographyFontSizes.medium,
+      fontWeight: fontWeight,
+      fontSize: TypographyFontSizes.large,
     );
   }
 
@@ -47,6 +39,7 @@ class TypographyFontSizes {
   static const smallest = 12.0;
   static const xMedium = 14.0;
   static const medium = 16.0;
+  static const large = 24.0;
 
   TypographyFontSizes._();
 }
