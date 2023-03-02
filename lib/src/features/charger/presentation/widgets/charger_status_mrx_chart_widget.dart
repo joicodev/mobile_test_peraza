@@ -38,7 +38,7 @@ class ChargerStatusMrxChartWidget extends StatelessWidget {
     }
   }
 
-  // Returns a list of ChartLayer objects.
+  // Returns a list of ChartLayer objects, which contain information for rendering the chart.
   List<ChartLayer> _layers() {
     return [
       // The ChartAxisLayer object defines the labels and settings for the x and y axis of the chart.
@@ -87,10 +87,12 @@ class ChargerStatusMrxChartWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
+          // Maximum container size constraints
           constraints: const BoxConstraints(
             maxHeight: 400.0,
             maxWidth: 600.0,
           ),
+          // Custom chart widget that shows upload information
           child: Chart(
             layers: _layers(),
             padding: const EdgeInsets.symmetric(
@@ -99,23 +101,29 @@ class ChargerStatusMrxChartWidget extends StatelessWidget {
           ),
         ),
         Flexible(
+          // A ListView that displays a list of items
           child: ListView.separated(
             itemCount: 5,
             separatorBuilder: (context, index) => const Divider(),
             itemBuilder: (context, index) {
+              // Get the load status based on the index
               final statusData = ChargerStatusEnum.byCode(index + 1);
+              // Gets the value of the state of charge according to the index and the selected time
               final value = _valueStatusByIndex(index + 1, data[hourSelected]);
               return ListTile(
                 dense: true,
                 minLeadingWidth: 0,
+                // The title of the ListTile is the name of the loading state
                 title: Text(
                   statusData.name,
                   style: CustomTextStyle.content(FontWeight.w400),
                 ),
+                // The text at the end of the ListTile is the value of the load state
                 trailing: Text(
                   '${value.toStringAsFixed(2)}%',
                   style: CustomTextStyle.content(),
                 ),
+                // The left container of the ListTile contains a circle with the color of the loading state
                 leading: Container(
                   width: 20,
                   height: 20,
