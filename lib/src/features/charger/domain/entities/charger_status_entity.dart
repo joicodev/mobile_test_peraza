@@ -5,15 +5,15 @@ part 'charger_status_entity.g.dart';
 @JsonSerializable()
 class ChargerStatusEntity {
   final int x;
-  @JsonKey(name: 'Available')
+  @JsonKey(name: 'Available', defaultValue: 0.0)
   final double available;
-  @JsonKey(name: 'Occupied')
+  @JsonKey(name: 'Occupied', defaultValue: 0.0)
   final double occupied;
-  @JsonKey(name: 'OutOfService')
+  @JsonKey(name: 'OutOfService', defaultValue: 0.0)
   final double outOfService;
-  @JsonKey(name: 'Reserved')
+  @JsonKey(name: 'Reserved', defaultValue: 0.0)
   final double reserved;
-  @JsonKey(name: 'Unknown')
+  @JsonKey(name: 'Unknown', defaultValue: 0.0)
   final double unknown;
 
   ChargerStatusEntity({

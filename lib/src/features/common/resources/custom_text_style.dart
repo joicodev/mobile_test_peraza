@@ -9,6 +9,14 @@ class CustomTextStyle {
     );
   }
 
+  static TextStyle medium([FontWeight fontWeight = FontWeight.w600]) {
+    return TextStyle(
+      color: Colors.black,
+      fontWeight: fontWeight,
+      fontSize: TypographyFontSizes.xSmall,
+    );
+  }
+
   static TextStyle paragraphRegular() {
     return const TextStyle(
       color: Colors.black,

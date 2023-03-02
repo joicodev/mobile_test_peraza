@@ -36,6 +36,58 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
     ),
   );
 
+  Widget _boxFilter() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.filter_alt_outlined,
+              size: 30,
+              color: Theme.of(context).primaryColor,
+            ),
+            Text('Filter by', style: CustomTextStyle.paragraphBold()),
+          ],
+        ),
+        Consumer(
+          builder: (context, ref, _) {
+            final state = ref.watch(chargerNotifierProvider);
+            return Row(
+              children: [
+                AppDropdownButtonHideUnderline(
+                  hint: 'Seleccionar día',
+                  selectedValue: _selectWeekDay,
+                  items: _itemsSelectWeekDay,
+                  enabled: !state.isLoading,
+                  onChanged: (Object? value) {
+                    setState(() {
+                      _selectHours = 0;
+                      _selectWeekDay = value as int?;
+                    });
+                    final prov = ref.read(chargerNotifierProvider.notifier);
+                    prov.getStatistics(_selectWeekDay!);
+                  },
+                ),
+                if (_selectWeekDay != null &&
+                    !state.hasError &&
+                    !state.isLoading)
+                  AppDropdownButtonHideUnderline(
+                    hint: 'Seleccionar hora',
+                    selectedValue: _selectHours,
+                    items: _itemsSelectHours,
+                    enabled: !state.isLoading,
+                    onChanged: (Object? value) {
+                      setState(() => _selectHours = (value as int?) ?? 1);
+                    },
+                  ),
+              ],
+            );
+          },
+        ).paddingSymmetric(vertical: 10),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,58 +96,16 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(
-                Icons.filter_alt_outlined,
-                size: 30,
-                color: Theme.of(context).primaryColor,
-              ),
-              Text('Filter by', style: CustomTextStyle.paragraphBold()),
-            ],
-          ),
-          Consumer(
-            builder: (context, ref, _) {
-              final state = ref.watch(chargerNotifierProvider);
-              return Row(
-                children: [
-                  AppDropdownButtonHideUnderline(
-                    hint: 'Seleccionar día',
-                    selectedValue: _selectWeekDay,
-                    items: _itemsSelectWeekDay,
-                    enabled: !state.isLoading,
-                    onChanged: (Object? value) {
-                      setState(() {
-                        _selectHours = 0;
-                        _selectWeekDay = value as int?;
-                      });
-                      final prov = ref.read(chargerNotifierProvider.notifier);
-                      prov.getStatistics(_selectWeekDay!);
-                    },
-                  ),
-                  if (_selectWeekDay != null &&
-                      !state.hasError &&
-                      !state.isLoading)
-                    AppDropdownButtonHideUnderline(
-                      hint: 'Seleccionar hora',
-                      selectedValue: _selectHours,
-                      items: _itemsSelectHours,
-                      enabled: !state.isLoading,
-                      onChanged: (Object? value) {
-                        setState(() => _selectHours = (value as int?) ?? 1);
-                      },
-                    ),
-                ],
-              );
-            },
-          ).paddingSymmetric(vertical: 10),
+          _boxFilter(),
           if (_selectWeekDay == null)
             CommonWidgets.buildLottieAsset(
               context,
               'assets/lottie/car_charger.json',
             )
           else
-            ChargerStatusStatisticsConsumerWidget(_selectHours),
+            Expanded(
+              child: ChargerStatusStatisticsConsumerWidget(_selectHours),
+            ),
         ],
       ).paddingSymmetric(horizontal: 20.0, vertical: 20),
     );
