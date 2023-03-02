@@ -2,7 +2,9 @@
 
 El objetivo del proyecto es consumir un endpoint proporcionado por Evsy, que devuelve información sobre el estado de los cargadores eléctricos. La respuesta del endpoint `api/status/statistics/` consiste en 24 registros que representan el estado del cargador para cada hora del día en una escala de 0 a 100. Existen cinco estados diferentes: disponible, ocupado, fuera de servicio, reservado y desconocido. El objetivo es filtrar los registros por días de la semana, por cada hora del día y mostrar la información de los cargadores eléctricos en un formato legible y comprensible, agregando los valores de cada estado y mostrando un gráfico de barras en porcentaje de 0 a 100 para cada día de la semana. El procesamiento de los datos se realiza en la capa de `application` y se muestran en la capa `presentation` mediante un gráfico de barras.
 
-![image](https://user-images.githubusercontent.com/31873662/222486488-e7617aa3-f3e0-4b36-b044-96f815a06417.png)
+![Evsy screens](https://user-images.githubusercontent.com/31873662/222545786-89db221c-6271-457f-8b69-e276056a056c.png)
+
+
 
 
 ## _Estructura del proyecto_
