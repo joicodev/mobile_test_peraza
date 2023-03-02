@@ -24,7 +24,7 @@ class ChargerStatusRepository implements IChargerStatusRepository {
 
       throw Exception();
     } catch (_) {
-      throw Exception();
+      throw Exception(_.toString());
     }
   }
 }

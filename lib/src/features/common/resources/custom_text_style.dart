@@ -9,6 +9,14 @@ class CustomTextStyle {
     );
   }
 
+  static TextStyle medium([FontWeight fontWeight = FontWeight.w600]) {
+    return TextStyle(
+      color: Colors.black,
+      fontWeight: fontWeight,
+      fontSize: TypographyFontSizes.xSmall,
+    );
+  }
+
   static TextStyle paragraphRegular() {
     return const TextStyle(
       color: Colors.black,
@@ -39,8 +47,6 @@ class TypographyFontSizes {
   static const smallest = 12.0;
   static const xMedium = 14.0;
   static const medium = 16.0;
-  static const xLarge = 18.0;
-  static const large = 20.0;
 
   TypographyFontSizes._();
 }

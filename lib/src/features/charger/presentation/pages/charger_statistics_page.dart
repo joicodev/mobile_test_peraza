@@ -5,7 +5,6 @@ import 'package:mobile_test_peraza/src/features/charger/presentation/widgets/cha
 import 'package:mobile_test_peraza/src/features/common/extensions/widget_extension.dart';
 import 'package:mobile_test_peraza/src/features/common/presentation/widgets/common_widgets.dart';
 import 'package:mobile_test_peraza/src/features/common/presentation/widgets/dropdown_button_hide_underline.dart';
-import 'package:mobile_test_peraza/src/features/common/resources/app_colors.dart';
 import 'package:mobile_test_peraza/src/features/common/resources/custom_text_style.dart';
 
 class ChargerStatisticsPage extends StatefulWidget {
@@ -15,10 +14,7 @@ class ChargerStatisticsPage extends StatefulWidget {
   State<ChargerStatisticsPage> createState() => _ChargerStatisticsPageState();
 }
 
-enum TypeChart { mrxChart, flChart }
-
 class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
-  TypeChart? _character = TypeChart.mrxChart;
   int? _selectWeekDay;
   int _selectHours = 0;
 
@@ -35,21 +31,75 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
   final _itemsSelectHours = List.generate(
     24,
     (index) => MenuItem(
-      text: 'Hora ${index + 1}',
       value: index,
+      text: 'Hora ${index + 1}',
     ),
   );
 
-  Widget _buildOptionsChart(String title, TypeChart value) {
-    return ListTile(
-      title: Text(title, style: const TextStyle(color: Colors.white)),
-      leading: Radio<TypeChart>(
-        value: value,
-        groupValue: _character,
-        onChanged: (TypeChart? value) {
-          setState(() => _character = value);
-        },
-      ),
+  Widget _boxFilter() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.filter_alt_outlined,
+              size: 30,
+              color: Theme.of(context).primaryColor,
+            ),
+            Text('Filtrar por', style: CustomTextStyle.paragraphBold()),
+            if (_selectWeekDay != null)
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    onPressed: () {
+                      _selectWeekDay = null;
+                      _selectHours = 0;
+                      setState(() {});
+                    },
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(Icons.refresh_outlined),
+                  ),
+                ),
+              )
+          ],
+        ),
+        Consumer(
+          builder: (context, ref, _) {
+            final state = ref.watch(chargerNotifierProvider);
+            return Row(
+              children: [
+                AppDropdownButtonHideUnderline(
+                  hint: 'Seleccionar día',
+                  selectedValue: _selectWeekDay,
+                  items: _itemsSelectWeekDay,
+                  enabled: !state.isLoading,
+                  onChanged: (Object? value) {
+                    setState(() {
+                      _selectHours = 0;
+                      _selectWeekDay = value as int?;
+                    });
+                    final prov = ref.read(chargerNotifierProvider.notifier);
+                    prov.getStatistics(_selectWeekDay!);
+                  },
+                ),
+                if (_selectWeekDay != null &&
+                    !state.hasError &&
+                    !state.isLoading)
+                  AppDropdownButtonHideUnderline(
+                    hint: 'Seleccionar hora',
+                    selectedValue: _selectHours,
+                    items: _itemsSelectHours,
+                    enabled: !state.isLoading,
+                    onChanged: (Object? value) {
+                      setState(() => _selectHours = (value as int?) ?? 1);
+                    },
+                  ),
+              ],
+            );
+          },
+        ).paddingSymmetric(vertical: 10),
+      ],
     );
   }
 
@@ -61,76 +111,18 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.filter_alt_outlined,
-                size: 32,
-                color: AppColors.primary,
-              ),
-              Text('Filter by', style: CustomTextStyle.paragraphBold()),
-            ],
-          ),
-          Consumer(
-            builder: (context, ref, _) {
-              return Row(
-                children: [
-                  AppDropdownButtonHideUnderline(
-                    hint: 'Seleccionar día',
-                    selectedValue: _selectWeekDay,
-                    items: _itemsSelectWeekDay,
-                    enabled: !ref.watch(chargerNotifierProvider).isLoading,
-                    onChanged: (Object? value) {
-                      setState(() => _selectWeekDay = value as int?);
-                      final prov = ref.read(chargerNotifierProvider.notifier);
-                      prov.getStatistics(_selectWeekDay!);
-                    },
-                  ),
-                  if (_selectWeekDay != null)
-                    AppDropdownButtonHideUnderline(
-                      hint: 'Seleccionar hora',
-                      selectedValue: _selectHours,
-                      items: _itemsSelectHours,
-                      enabled: !ref.watch(chargerNotifierProvider).isLoading,
-                      onChanged: (Object? value) {
-                        setState(() => _selectHours = (value as int?) ?? 1);
-                      },
-                    ),
-                ],
-              );
-            },
-          ).paddingSymmetric(vertical: 10),
+          _boxFilter(),
           if (_selectWeekDay == null)
             CommonWidgets.buildLottieAsset(
               context,
               'assets/lottie/car_charger.json',
             )
           else
-            ChargerStatusStatisticsConsumerWidget(_selectHours),
-          /* Row(
-            children: [
-              Flexible(
-                child: _buildOptionsChart('Mrx Chart', TypeChart.mrxChart),
-              ),
-              Flexible(
-                child: _buildOptionsChart('Fl Chart', TypeChart.flChart),
-              ),
-            ],
-          ),
-          _character == TypeChart.mrxChart
-              ? ChargerStatusMrxChartWidget(
-                  List.generate(
-                    5,
-                    (index) => ChartBarDataItem(
-                      color: const Color(0xFF8043F9),
-                      value: Random().nextInt(100) + 1,
-                      x: index.toDouble() + 1,
-                    ),
-                  ),
-                )
-              : ChargerStatusFlChartWidget()*/
+            Expanded(
+              child: ChargerStatusStatisticsConsumerWidget(_selectHours),
+            ),
         ],
-      ).paddingSymmetric(horizontal: 20.0, vertical: 20),
+      ).paddingAll(20),
     );
   }
 }

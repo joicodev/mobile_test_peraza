@@ -9,11 +9,11 @@ part of 'charger_status_entity.dart';
 ChargerStatusEntity _$ChargerStatusEntityFromJson(Map<String, dynamic> json) =>
     ChargerStatusEntity(
       x: json['x'] as int,
-      available: (json['Available'] as num).toDouble(),
-      occupied: (json['Occupied'] as num).toDouble(),
-      outOfService: (json['OutOfService'] as num).toDouble(),
-      reserved: (json['Reserved'] as num).toDouble(),
-      unknown: (json['Unknown'] as num).toDouble(),
+      available: (json['Available'] as num?)?.toDouble() ?? 0.0,
+      occupied: (json['Occupied'] as num?)?.toDouble() ?? 0.0,
+      outOfService: (json['OutOfService'] as num?)?.toDouble() ?? 0.0,
+      reserved: (json['Reserved'] as num?)?.toDouble() ?? 0.0,
+      unknown: (json['Unknown'] as num?)?.toDouble() ?? 0.0,
     );
 
 Map<String, dynamic> _$ChargerStatusEntityToJson(

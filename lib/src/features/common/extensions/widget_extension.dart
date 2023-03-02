@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 
 extension WidgetExtension on Widget? {
-  /// set parent widget in center
-  Widget center({double? heightFactor, double? widthFactor}) {
-    return Center(
-      heightFactor: heightFactor,
-      widthFactor: widthFactor,
-      child: this,
-    );
-  }
-
   /// return padding top
   Padding paddingTop(double top) {
     return Padding(padding: EdgeInsets.only(top: top), child: this);
@@ -56,8 +47,8 @@ extension WidgetExtension on Widget? {
   /// return padding symmetric
   Padding paddingSymmetric({double vertical = 0.0, double horizontal = 0.0}) {
     return Padding(
-      child: this,
       padding: EdgeInsets.symmetric(vertical: vertical, horizontal: horizontal),
+      child: this,
     );
   }
 }
