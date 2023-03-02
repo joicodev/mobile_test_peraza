@@ -47,6 +47,21 @@ class _ChargerStatisticsPageState extends State<ChargerStatisticsPage> {
               color: Theme.of(context).primaryColor,
             ),
             Text('Filtrar por', style: CustomTextStyle.paragraphBold()),
+            if (_selectWeekDay != null)
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    onPressed: () {
+                      _selectWeekDay = null;
+                      _selectHours = 0;
+                      setState(() {});
+                    },
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(Icons.refresh_outlined),
+                  ),
+                ),
+              )
           ],
         ),
         Consumer(
