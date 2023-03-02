@@ -12,8 +12,7 @@ import 'package:mobile_test_peraza/src/features/common/infrastructure/evsy_clien
 // Define a StateNotifier provider for ChargerStatusNotifier, with type AsyncValue<List<ChargerStatusEntity>>
 final chargerNotifierProvider = StateNotifierProvider<ChargerStatusNotifier,
     AsyncValue<List<ChargerStatusEntity>>>(
-  // An anonymous function is used that receives a ref object of type ProviderRef and returns an instance of ChargerStatusNotifier
-  // Provider _chargerRepositoryProvider is called to get an instance of IChargerStatusRepository
+  // Provider _chargerRepositoryProvider is called to get an instance of IChargerStatusRepository and return an instance of ChargerStatusNotifier
   (ref) => ChargerStatusNotifier(ref.watch(_chargerRepositoryProvider)),
 );
 

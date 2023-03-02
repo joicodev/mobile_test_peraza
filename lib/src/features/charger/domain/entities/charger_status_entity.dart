@@ -8,19 +8,19 @@ class ChargerStatusEntity {
   // We define an integer type field called 'x', this represents each hour and its value goes from 0 to 23
   final int x;
   // We define the field of double type, which contains the value of the state called 'Available'.
-  @JsonKey(name: 'Available', defaultValue: 0.0)
+  @JsonKey(name: 'Available', defaultValue: 0.0, includeIfNull: true)
   final double available;
   // We define the field of double type, which contains the value of the state called 'Occupied'.
-  @JsonKey(name: 'Occupied', defaultValue: 0.0)
+  @JsonKey(name: 'Occupied', defaultValue: 0.0, includeIfNull: true)
   final double occupied;
   // We define the field of double type, which contains the value of the state called 'OutOfService'.
-  @JsonKey(name: 'OutOfService', defaultValue: 0.0)
+  @JsonKey(name: 'OutOfService', defaultValue: 0.0, includeIfNull: true)
   final double outOfService;
   // We define the field of double type, which contains the value of the state called 'Reserved'.
-  @JsonKey(name: 'Reserved', defaultValue: 0.0)
+  @JsonKey(name: 'Reserved', defaultValue: 0.0, includeIfNull: true)
   final double reserved;
   // We define the field of double type, which contains the value of the state called 'Unknown'.
-  @JsonKey(name: 'Unknown', defaultValue: 0.0)
+  @JsonKey(name: 'Unknown', defaultValue: 0.0, includeIfNull: true)
   final double unknown;
 
   // Constructor of the class that receives the values of the fields as parameters.
