@@ -27,6 +27,9 @@ class EvsyDioClient {
   // Getter that returns an instance of the Dio HTTP client.
   Dio get _client => _dioClient ?? Dio(_baseOptions);
 
+  // Getter that returns an instance of the BaseOptions.
+  BaseOptions get options => _baseOptions;
+
   // Private method used to invoke an HTTP API.
   Future<Response> _invokeAPI(
     String path,
@@ -45,12 +48,15 @@ class EvsyDioClient {
     Response response;
     try {
       // Constructs the HTTP request URL from the provided baseUrl and path.
-      final String url = '$baseUrl/$path';
-      // Encodes the request body in JSON format.
-      final data = body == null ? '' : json.encode(body);
+      final replacedBaseUrl = baseUrl.replaceAll(RegExp(r'/+$'), '');
+      final replacedPath = path.replaceAll(RegExp(r'^/+'), '');
+      final String url = '$replacedBaseUrl/$replacedPath';
+
       // Makes the HTTP request using the Dio library, with the provided data.
       switch (method) {
         case 'POST':
+          // Encodes the request body in JSON format.
+          final data = body == null ? '' : json.encode(body);
           return await _client.request(url, data: data);
         default:
           return await _client.request(url);
